@@ -11,7 +11,15 @@ module.exports = (sequelize, DataTypes) => {
         contact: {
             type: DataTypes.STRING,
             allowNull: false,
-        }
+        },
+        location: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
     });
     return Occupants;
 };

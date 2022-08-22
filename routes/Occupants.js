@@ -1,15 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const {Occupants} = require("../models");
-
-router.get("/", (req, res) => {
-   res.json("Hello world");
-});
+const bcrypt = require("bcrypt");
 
 router.post("/", async (req, res) => {
-   const occupant = req.body;
-   await Occupants.create(occupant);
-   res.json(occupant);
+   const {email, name, contact, location, password} = req.body;
+   bcrypt.hash(password, 10).then((hash) => {
+      Occupants.create({
+         email: email,
+         name: name,
+         contact: contact,
+         location: location,
+         password: hash,
+      });
+      res.json("SUCCESS");
+   });
 });
 
 module.exports = router;
