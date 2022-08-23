@@ -15,4 +15,21 @@ router.post("/", async (req, res) => {
     });
 });
 
+// router.post("/login", async (req, res) => {
+//    const {email, password} = req.body;
+//
+//    const user = await Users.findOne({where: {email: email}});
+//
+//    if (!user) {
+//        res.json({error: "User doesn't exist"});
+//    }
+//
+//    bcrypt.compare(password, user.password).then((match)=>{
+//        if(!match) {
+//            res.json({error: "Invalid username or password"});
+//        }
+//        res.json("Logged in");
+//    });
+// });
+
 module.exports = router;
