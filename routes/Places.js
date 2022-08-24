@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Places } = require("../models");
 
-router.post("/addnewplace", async (req, res) => {
+router.post("/user/addnewrent", async (req, res) => {
   const {
     title,
     quantity,
