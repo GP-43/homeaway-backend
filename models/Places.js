@@ -4,19 +4,39 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        category: {
+        quantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        price_type: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        no: {
+        address: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        location: {
+        room_category: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        password: {
+        contact_no: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        price: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        city: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        postal_code: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        description: {
             type: DataTypes.STRING,
             allowNull: false,
         },
