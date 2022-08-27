@@ -6,7 +6,7 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 
-const db = require("./models");
+const db = require("./models"); 
 
 const occupantsRouter = require("./routes/Occupants");
 app.use("/auth", occupantsRouter);
