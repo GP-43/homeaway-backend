@@ -12,7 +12,7 @@ const occupantsRouter = require("./routes/Occupants");
 app.use("/signup", occupantsRouter);
 
 const placesrouter = require("./routes/Places");
-app.use("/user/addnewrent", placesrouter);
+app.use("/addnewrent", placesrouter);
 
 db.sequelize.sync().then(() => {
     app.listen(port, () => {
