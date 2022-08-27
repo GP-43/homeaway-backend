@@ -9,7 +9,7 @@ app.use(cors());
 const db = require("./models");
 
 const occupantsRouter = require("./routes/Occupants");
-app.use("/signup", occupantsRouter);
+app.use("/auth", occupantsRouter);
 
 const placesrouter = require("./routes/Places");
 app.use("/addnewrent", placesrouter);
