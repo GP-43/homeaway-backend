@@ -20,8 +20,8 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-    const {email, password} = req.body;
 
+    const {email, password} = req.body;
     const occupant = await Occupants.findOne({where: {email: email}});
     console.log(occupant)
     if (!occupant) {
@@ -42,5 +42,20 @@ router.post("/login", async (req, res) => {
         });
     }
 });
+
+
+router.get("/users", async (req, res) => {
+    
+    const {email, password} = req.body;
+
+    const occupant = await Occupants.findAll({where: {role: 2}});
+    console.log(occupant)
+    if (!occupant) {
+        res.json({state: 0, error: "User doesn't exist"});
+    } else {
+        console.log(occupant)
+    }
+});
+
 
 module.exports = router;
