@@ -1,27 +1,24 @@
 module.exports = (sequelize, DataTypes) => {
     const Complaint = sequelize.define("Complaint", {
-        email: {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        compliner_id: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        name: {
+        subject: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        contact: {
+        },       
+        complainee_id: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        location: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        role: {
-            type: DataTypes.STRING,
+        },       
+        status: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
     });
