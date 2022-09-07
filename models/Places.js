@@ -5,10 +5,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         quantity: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.INTEGER, 
             allowNull: false,
         },
-        price_type: {
+        priceType: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -16,11 +16,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        room_category: {
+        roomCategory: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        contact_no: {
+        contactNo: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -31,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
         city: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        postal_code: {
+        }, 
+        postalCode: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -40,6 +40,28 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        image: {
+            type: DataTypes.STRING,
+            allowNull: false, 
+        },
+        wifi: {
+            type: DataTypes.BOOLEAN,
+        },
+        parking: {
+            type: DataTypes.BOOLEAN,
+        },
+        ac: {
+            type: DataTypes.BOOLEAN,
+        },
+        silent: {
+            type: DataTypes.BOOLEAN,
+        },
+        food: {
+            type: DataTypes.BOOLEAN,
+        },
+        washroom: {
+            type: DataTypes.BOOLEAN,
+        }
     });
     return Places;
 };
