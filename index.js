@@ -21,6 +21,9 @@ app.use("/auth", occupantsRouter);
 const placesrouter = require("./routes/Places");
 app.use("/addnewrent", placesrouter);
  
+const adminRouter = require("./routes/Admin");
+app.use("/admin", adminRouter);
+
 db.sequelize.sync().then(() => {
     app.listen(port, () => {
         console.log(`Example app listening ${port}`);
