@@ -33,29 +33,50 @@ router.get("/select/complaints", async (req, res) => {
 
 
 
-//delete complain
+// //delete complain
 
-router.delete("/delete/complaint/:id", async (req, res) => {
+// router.delete("/delete/complaint/:id", async (req, res) => {
+    
+    
+//     const complaintId = req.params.id;
+    
+//     const deleteComplaint = await Complaint.destroy({ where: { id: complaintId } });
+    
+    
+    
+//     if (!deleteComplaint) {
+//         res.json({state: 0, error: "Complaint doesn't exist"});
+//     } else {
+//         res.json(deleteComplaint)
+//     }
+
+// });
+
+
+
+//update complain
+
+router.put("/delete/complaint/:id", async (req, res) => {
     
     
     const complaintId = req.params.id;
-    
-    const deleteComplaint = await Complaint.destroy({ where: { id: complaintId } });
-    
-    
-    
-    if (!deleteComplaint) {
-        res.json({state: 0, error: "User doesn't exist"});
-    } else {
-        res.send(deleteComplaint)
-    }
-    
 
-    //params( req.params.id)
-
-    res.json({state: 0, error: complaintId });
-
+    console.log(complaintId);
+    
+    // const deleteComplaint = await Complaint.update({ where: { id: complaintId } });
+    
+    
+    
+    // if (!deleteComplaint) {
+    //     res.json({state: 0, error: "Complaint doesn't exist"});
+    // } else {
+    //     res.json(deleteComplaint)
+    // }
+    
+        res.json({status:"Success"})
 });
+
+
 
 
 module.exports = router;
