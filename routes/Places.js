@@ -38,9 +38,10 @@ async (req, res) => {
     wifi,
     parking,
     ac,
-    silent,
+    silent, 
     food,
     washroom,
+    // rating,
 
   } = JSON.parse(req.body.addNewFormData);
   // console.log('Body:', req.body);
@@ -77,6 +78,7 @@ async (req, res) => {
     silent: silent,
     food:food,
     washroom:washroom,
+    // rating:rating,
   })
     .then((response) => {
       console.log(response); 

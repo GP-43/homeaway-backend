@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
         priceType: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        address: {
+        }, 
+        address: { 
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -61,7 +61,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         washroom: {
             type: DataTypes.BOOLEAN,
-        }
+        },
+        // rating: {
+        //     type: DataTypes.INTEGER, 
+        //     allowNull: false,
+        // }
     });
     return Places;
 };
