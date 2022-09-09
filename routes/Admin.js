@@ -22,7 +22,11 @@ router.get("/users", async (req, res) => {
 
 router.get("/select/complaints", async (req, res) => {
     
-    const complaint = await Complaint.findAll({where: {status: 1}});
+    const complaint = await Complaint.findAll(
+        {
+            where: {status: "1"}
+        }
+    );
     console.log(complaint)
     if (!complaint) {
         res.json({state: 0, error: "User doesn't exist"});
@@ -54,26 +58,51 @@ router.get("/select/complaints", async (req, res) => {
 
 
 
-//update complain
+//accept complain
 
-router.put("/delete/complaint/:id", async (req, res) => {
-    
-    
+router.put("/accept/complaint/:id", async (req, res) => {
+     
     const complaintId = req.params.id;
 
-    console.log(complaintId);
+    console.log("Hello",complaintId);
     
-    // const deleteComplaint = await Complaint.update({ where: { id: complaintId } });
+    const acceptComplaint = await Complaint.update(  
+        {
+            status: "2",
+        },
+        {
+            where: { id: complaintId } 
+        });  
+    if (!acceptComplaint) { 
+        res.json({state: 0, error: "Complaint doesn't exist"});
+    } else {
+        res.json(acceptComplaint)
+    }
     
+});
+
+
+//reject complain
+
+router.put("/reject/complaint/:id", async (req, res) => {
+      
+    const complaintId = req.params.id;
     
+    const rejectComplaint = await Complaint.update(
+        {
+            status : "0",
+        },
+        {
+            where: { id: complaintId }
+        },
+        );  
     
-    // if (!deleteComplaint) {
-    //     res.json({state: 0, error: "Complaint doesn't exist"});
-    // } else {
-    //     res.json(deleteComplaint)
-    // }
-    
-        res.json({status:"Success"})
+    if (!rejectComplaint) {
+        res.json({state: 0, error: "Complaint doesn't exist"});
+    } else {
+        res.json(rejectComplaint)
+    }
+
 });
 
 
