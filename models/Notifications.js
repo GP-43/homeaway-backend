@@ -1,26 +1,26 @@
 module.exports = (sequelize, DataTypes) => {
-    const Complaint = sequelize.define("Complaint", {
-        id: {
+    const Notifications = sequelize.define("Notifications", {
+        id: { 
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         compliner_id: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
-        },
-        subject: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },       
+        },     
         complainee_id: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },       
         status: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
-    });
-    return Complaint;
+        complaint_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        }
+    }); 
+    return Notifications;
 };
