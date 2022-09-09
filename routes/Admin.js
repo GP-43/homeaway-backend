@@ -129,9 +129,10 @@ const acceptComplaint = await Complaint.update(
     } else {
         
         await Notifications.create({
-            compliner_id: ids.complainerId,
-            complainee_id: ids.complaineeId,
-            status : 1
+            compliner_id : ids.complainerId,
+            complainee_id : ids.complaineeId,
+            status : "accepted",
+            complaint_id : complaintId
           });
 
         res.json(acceptComplaint)
@@ -145,7 +146,7 @@ const acceptComplaint = await Complaint.update(
 router.put("/reject/complaint/:id", async (req, res) => {
       
     const complaintId = req.params.id;
-    
+    const ids = req.body;
     const rejectComplaint = await Complaint.update(
         {
             status : 0,
@@ -158,6 +159,12 @@ router.put("/reject/complaint/:id", async (req, res) => {
     if (!rejectComplaint) {
         res.json({state: 0, error: "Complaint doesn't exist"});
     } else {
+        await Notifications.create({
+            compliner_id : ids.complainerId,
+            complainee_id : ids.complaineeId,
+            status : "rejected",
+            complaint_id : complaintId
+          });
         res.json(rejectComplaint)
     }
 
