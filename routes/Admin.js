@@ -18,19 +18,6 @@ router.get("/users", async (req, res) => {
     }
 });
 
-//select complaints
-
-router.get("/select/complaints", async (req, res) => {
-    
-    const complaint = await Complaint.findAll(
-        {
-            where: {status: "1"}
-        }
-    );
-    console.log(complaint)
-    if (!complaint) {
-        res.json({state: 0, error: "User doesn't exist"});
-    }});
 //View payments
 
 router.get("/view/payment", async (req, res) => {
@@ -47,13 +34,32 @@ router.get("/view/payment", async (req, res) => {
 });
 
 
+//select complaints
+
+router.get("/select/complaints", async (req, res) => {
+    
+    const complaint = await Complaint.findAll(
+        {
+            where: {status: 1}
+        }
+    );
+    console.log(complaint)
+    
+    if (!complaint) {
+        res.json({state: 0, error: "User doesn't exist"});
+    } else {
+        res.send(complaint)
+    }
+});
+    
+
 //select accepted complaints
 
 router.get("/select/acceptedComplaints", async (req, res) => {
     
     const complaint = await Complaint.findAll(
         {
-            where: {status: "2"}
+            where: {status: 2}
         }
     );
     console.log(complaint)
@@ -71,7 +77,7 @@ router.get("/select/rejectedComplaints", async (req, res) => {
     
     const complaint = await Complaint.findAll(
         {
-            where: {status: "0"}
+            where: {status: 0}
         }
     );
     console.log(complaint)
@@ -107,15 +113,11 @@ router.get("/select/rejectedComplaints", async (req, res) => {
 
 //accept complain
 
-router.put("/accept/complaint/:id", async (req, res) => {
-     
-    const complaintId = req.params.id;
-
-    console.log("Hello",complaintId);
-    
-    const acceptComplaint = await Complaint.update(  
+router.put("/accept/complaint/:id", async (req, res) => { 
+   const complaintId = req.params.id; 
+const acceptComplaint = await Complaint.update(  
         {
-            status: "2",
+            status: 2,
         },
         {
             where: { id: complaintId } 
@@ -137,7 +139,7 @@ router.put("/reject/complaint/:id", async (req, res) => {
     
     const rejectComplaint = await Complaint.update(
         {
-            status : "0",
+            status : 0,
         },
         {
             where: { id: complaintId }
