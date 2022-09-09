@@ -35,6 +35,41 @@ router.get("/select/complaints", async (req, res) => {
     }
 });
 
+//select accepted complaints
+
+router.get("/select/acceptedComplaints", async (req, res) => {
+    
+    const complaint = await Complaint.findAll(
+        {
+            where: {status: "2"}
+        }
+    );
+    console.log(complaint)
+    if (!complaint) {
+        res.json({state: 0, error: "User doesn't exist"});
+    } else {
+        res.send(complaint)
+    }
+});
+
+
+//select rejected complaints
+
+router.get("/select/rejectedComplaints", async (req, res) => {
+    
+    const complaint = await Complaint.findAll(
+        {
+            where: {status: "0"}
+        }
+    );
+    console.log(complaint)
+    if (!complaint) {
+        res.json({state: 0, error: "User doesn't exist"});
+    } else {
+        res.send(complaint)
+    }
+});
+
 
 
 // //delete complain
