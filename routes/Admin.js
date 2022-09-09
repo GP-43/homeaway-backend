@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Occupants, Complaint, Payments } = require("../models");
+const { Occupants, Complaint, Payments, Notifications } = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 
@@ -115,6 +115,8 @@ router.get("/select/rejectedComplaints", async (req, res) => {
 
 router.put("/accept/complaint/:id", async (req, res) => { 
    const complaintId = req.params.id; 
+   const ids = req.body;
+   console.log(ids)
 const acceptComplaint = await Complaint.update(  
         {
             status: 2,
@@ -125,6 +127,13 @@ const acceptComplaint = await Complaint.update(
     if (!acceptComplaint) { 
         res.json({state: 0, error: "Complaint doesn't exist"});
     } else {
+        
+        await Notifications.create({
+            compliner_id: ids.complainerId,
+            complainee_id: ids.complaineeId,
+            status : 1
+          });
+
         res.json(acceptComplaint)
     }
     
