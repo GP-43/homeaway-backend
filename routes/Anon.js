@@ -4,8 +4,7 @@ const { Places } = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 
-
-//View payments
+//Best Renting
 
 router.get("/bestplaces", async (req, res) => {
 
