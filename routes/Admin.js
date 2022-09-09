@@ -183,6 +183,20 @@ router.put("/reject/complaint/:id", async (req, res) => {
 
 });
 
+//select renters
+router.get("/select/renters", async (req, res) => {
+
+    // const {email, password} = req.body;
+
+    const occupant = await Occupants.findAll({ where: { role: 3 } });
+    console.log(occupant)
+    if (!occupant) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(occupant)
+    }
+});
+
 
 
 
