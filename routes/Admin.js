@@ -4,11 +4,8 @@ const { Occupants, Complaint, Payments, Notifications } = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 
-
+//select occupants
 router.get("/users", async (req, res) => {
-
-    // const {email, password} = req.body;
-
     const occupant = await Occupants.findAll({ where: { role: 2 } });
     console.log(occupant)
     if (!occupant) {
@@ -185,9 +182,6 @@ router.put("/reject/complaint/:id", async (req, res) => {
 
 //select renters
 router.get("/select/renters", async (req, res) => {
-
-    // const {email, password} = req.body;
-
     const occupant = await Occupants.findAll({ where: { role: 3 } });
     console.log(occupant)
     if (!occupant) {
