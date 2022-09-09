@@ -1,10 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
     const Occupants = sequelize.define("Occupants", {
-        email: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        name: {
+        image: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        email: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -22,6 +26,18 @@ module.exports = (sequelize, DataTypes) => {
         },
         role: {
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        joinedDate: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        properties: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        rate: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
     });
