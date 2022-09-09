@@ -18,6 +18,19 @@ router.get("/users", async (req, res) => {
     }
 });
 
+router.get("/view/renters", async (req, res) => {
+
+    // const {email, password} = req.body;
+
+    const renter = await Occupants.findAll({ where: { role: 3 } });
+    console.log(renter)
+    if (!renter) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(renter)
+    }
+});
+
 //View payments
 
 router.get("/view/payment", async (req, res) => {
