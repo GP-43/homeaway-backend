@@ -24,6 +24,18 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        joinedDate: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        properties: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        rate: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     });
     return Occupants;
 };
