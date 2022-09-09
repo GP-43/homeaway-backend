@@ -24,6 +24,9 @@ app.use("/addnewrent", placesrouter);
 const adminRouter = require("./routes/Admin");
 app.use("/admin", adminRouter);
 
+const anonRouter = require("./routes/Anon");
+app.use("/anon", anonRouter);
+
 db.sequelize.sync().then(() => {
     app.listen(port, () => {
         console.log(`Example app listening ${port}`);

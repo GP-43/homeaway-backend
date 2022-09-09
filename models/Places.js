@@ -62,10 +62,10 @@ module.exports = (sequelize, DataTypes) => {
         washroom: {
             type: DataTypes.BOOLEAN,
         },
-        // rating: {
-        //     type: DataTypes.INTEGER, 
-        //     allowNull: false,
-        // }
+        rating: {
+            type: DataTypes.INTEGER, 
+            allowNull: false,
+        },
     });
     return Places;
-};
+}; 

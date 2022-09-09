@@ -41,7 +41,7 @@ async (req, res) => {
     silent, 
     food,
     washroom,
-    // rating,
+    rating,
 
   } = JSON.parse(req.body.addNewFormData);
   // console.log('Body:', req.body);
@@ -78,7 +78,7 @@ async (req, res) => {
     silent: silent,
     food:food,
     washroom:washroom,
-    // rating:rating,
+    rating:0, 
   })
     .then((response) => {
       console.log(response); 
