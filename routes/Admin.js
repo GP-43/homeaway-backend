@@ -204,7 +204,28 @@ router.get("/select/renters", async (req, res) => {
     }
 });
 
+//delete Occupant/update table
 
+router.put("/delete/occupant/:id", async (req, res) => {
+      
+    const occupantId = req.params.id;
+    const ids = req.body;
+    const deleteOccupant = await Occupants.update(
+        {
+            role : "0",
+        },
+        {
+            where: { id: occupantId }
+        },
+        );  
+    
+    if (!deleteOccupant) {
+        res.json({state: 0, error: "Complaint doesn't exist"});
+    } else {
+        res.json(deleteOccupant)
+    }
+
+});
 
 
 module.exports = router;
