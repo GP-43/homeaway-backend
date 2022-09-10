@@ -191,7 +191,7 @@ router.get("/select/renters", async (req, res) => {
     }
 });
 
-//delete Occupant
+//delete Occupant/update table
 
 router.put("/delete/occupant/:id", async (req, res) => {
       
