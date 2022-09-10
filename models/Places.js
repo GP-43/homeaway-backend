@@ -72,4 +72,4 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
     return Places;
-};
+}; 
