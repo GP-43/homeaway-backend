@@ -3,6 +3,7 @@ const router = express.Router();
 const { Occupants, Complaint, Payments, Notifications, Places } = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
+const RatingFeedback = require('../models/RatingFeedback');
 
 //select occupants
 router.get("/users", async (req, res) => {
@@ -204,7 +205,15 @@ router.get("/select/renters", async (req, res) => {
     }
 });
 
-
-
+//about us
+router.get("/select/aboutus", async (req, res) => {
+    const aboutus = await RatingFeedback.findAll();
+    console.log(aboutus)
+    if (!aboutus) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(aboutus)
+    }
+});
 
 module.exports = router;
