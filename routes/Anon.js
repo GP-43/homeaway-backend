@@ -19,6 +19,4 @@ router.get("/bestplaces", async (req, res) => {
     }
 });
 
-
-
 module.exports = router;
