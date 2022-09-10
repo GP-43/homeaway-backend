@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Occupants, Complaint, Payments, Notifications } = require("../models");
+const { Occupants, Complaint, Payments, Notifications, Places } = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 
@@ -12,6 +12,19 @@ router.get("/users", async (req, res) => {
         res.json({ state: 0, error: "User doesn't exist" });
     } else {
         res.send(occupant)
+    }
+});
+
+router.get("/view/places", async (req, res) => {
+
+    // const {email, password} = req.body;
+
+    const place = await Places.findAll();
+    console.log(place)
+    if (!place) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(place)
     }
 });
 
@@ -47,34 +60,34 @@ router.get("/view/payment", async (req, res) => {
 //select complaints
 
 router.get("/select/complaints", async (req, res) => {
-    
+
     const complaint = await Complaint.findAll(
         {
-            where: {status: 1}
+            where: { status: 1 }
         }
     );
     console.log(complaint)
-    
+
     if (!complaint) {
-        res.json({state: 0, error: "User doesn't exist"});
+        res.json({ state: 0, error: "User doesn't exist" });
     } else {
         res.send(complaint)
     }
 });
-    
+
 
 //select accepted complaints
 
 router.get("/select/acceptedComplaints", async (req, res) => {
-    
+
     const complaint = await Complaint.findAll(
         {
-            where: {status: 2}
+            where: { status: 2 }
         }
     );
     console.log(complaint)
     if (!complaint) {
-        res.json({state: 0, error: "User doesn't exist"});
+        res.json({ state: 0, error: "User doesn't exist" });
     } else {
         res.send(complaint)
     }
@@ -84,15 +97,15 @@ router.get("/select/acceptedComplaints", async (req, res) => {
 //select rejected complaints
 
 router.get("/select/rejectedComplaints", async (req, res) => {
-    
+
     const complaint = await Complaint.findAll(
         {
-            where: {status: 0}
+            where: { status: 0 }
         }
     );
     console.log(complaint)
     if (!complaint) {
-        res.json({state: 0, error: "User doesn't exist"});
+        res.json({ state: 0, error: "User doesn't exist" });
     } else {
         res.send(complaint)
     }
@@ -103,14 +116,14 @@ router.get("/select/rejectedComplaints", async (req, res) => {
 // //delete complain
 
 // router.delete("/delete/complaint/:id", async (req, res) => {
-    
-    
+
+
 //     const complaintId = req.params.id;
-    
+
 //     const deleteComplaint = await Complaint.destroy({ where: { id: complaintId } });
-    
-    
-    
+
+
+
 //     if (!deleteComplaint) {
 //         res.json({state: 0, error: "Complaint doesn't exist"});
 //     } else {
@@ -123,58 +136,58 @@ router.get("/select/rejectedComplaints", async (req, res) => {
 
 //accept complain
 
-router.put("/accept/complaint/:id", async (req, res) => { 
-   const complaintId = req.params.id; 
-   const ids = req.body;
-   console.log(ids)
-const acceptComplaint = await Complaint.update(  
+router.put("/accept/complaint/:id", async (req, res) => {
+    const complaintId = req.params.id;
+    const ids = req.body;
+    console.log(ids)
+    const acceptComplaint = await Complaint.update(
         {
             status: 2,
         },
         {
-            where: { id: complaintId } 
-        });  
-    if (!acceptComplaint) { 
-        res.json({state: 0, error: "Complaint doesn't exist"});
+            where: { id: complaintId }
+        });
+    if (!acceptComplaint) {
+        res.json({ state: 0, error: "Complaint doesn't exist" });
     } else {
-        
+
         await Notifications.create({
-            compliner_id : ids.complainerId,
-            complainee_id : ids.complaineeId,
-            status : "accepted",
-            complaint_id : complaintId
-          });
+            compliner_id: ids.complainerId,
+            complainee_id: ids.complaineeId,
+            status: "accepted",
+            complaint_id: complaintId
+        });
 
         res.json(acceptComplaint)
     }
-    
+
 });
 
 
 //reject complain
 
 router.put("/reject/complaint/:id", async (req, res) => {
-      
+
     const complaintId = req.params.id;
     const ids = req.body;
     const rejectComplaint = await Complaint.update(
         {
-            status : 0,
+            status: 0,
         },
         {
             where: { id: complaintId }
         },
-        );  
-    
+    );
+
     if (!rejectComplaint) {
-        res.json({state: 0, error: "Complaint doesn't exist"});
+        res.json({ state: 0, error: "Complaint doesn't exist" });
     } else {
         await Notifications.create({
-            compliner_id : ids.complainerId,
-            complainee_id : ids.complaineeId,
-            status : "rejected",
-            complaint_id : complaintId
-          });
+            compliner_id: ids.complainerId,
+            complainee_id: ids.complaineeId,
+            status: "rejected",
+            complaint_id: complaintId
+        });
         res.json(rejectComplaint)
     }
 
