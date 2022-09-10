@@ -193,36 +193,46 @@ router.put("/reject/complaint/:id", async (req, res) => {
 
 });
 
-//select renters
-router.get("/select/renters", async (req, res) => {
-    const occupant = await Occupants.findAll({ where: { role: 3 } });
-    console.log(occupant)
-    if (!occupant) {
-        res.json({ state: 0, error: "User doesn't exist" });
-    } else {
-        res.send(occupant)
-    }
-});
-
 //delete Occupant/update table
 
 router.put("/delete/occupant/:id", async (req, res) => {
-      
+
     const occupantId = req.params.id;
-    const ids = req.body;
     const deleteOccupant = await Occupants.update(
         {
-            role : "0",
+            role: "0",
         },
         {
             where: { id: occupantId }
         },
-        );  
-    
+    );
+
     if (!deleteOccupant) {
-        res.json({state: 0, error: "Complaint doesn't exist"});
+        res.json({ state: 0, error: "Complaint doesn't exist" });
     } else {
         res.json(deleteOccupant)
+    }
+
+});
+
+//delete Renter/update table
+
+router.put("/delete/renter/:id", async (req, res) => {
+
+    const renterId = req.params.id;
+    const deleteRenter = await Occupants.update(
+        {
+            role: "0",
+        },
+        {
+            where: { id: renterId }
+        },
+    );
+
+    if (!deleteRenter) {
+        res.json({ state: 0, error: "Complaint doesn't exist" });
+    } else {
+        res.json(deleteRenter)
     }
 
 });
