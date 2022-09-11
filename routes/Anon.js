@@ -23,9 +23,8 @@ router.get("/bestplaces", async (req, res) => {
 
 router.get("/latestplaces", async (req, res) => {
 
-    // const {email, password} = req.body;
-
-    const places = await Places.findAll({ });
+    // const {email, password} = req.body;          {where: {createAt: new Date()-7}}
+    const places = await Places.findAll({});
     console.log(places)
     if (!places) {
         res.json({ state: 0, error: "User doesn't exist" });
