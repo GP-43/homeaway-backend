@@ -22,8 +22,8 @@ router.get("/bestplaces", async (req, res) => {
 //latest place
 
 router.get("/latestplaces", async (req, res) => {
-
-    // const {email, password} = req.body;          {where: {createAt: new Date()-7}}
+    
+    // const {email, password} = req.body;  
     const places = await Places.findAll({});
     console.log(places)
     if (!places) {
