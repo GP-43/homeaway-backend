@@ -21,6 +21,16 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
+router.get("/places", async (req, res) =>  {
+    const places = await Places.findAll();
+    if (!places) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.json(places);
+    }
+});
+
+
 router.post("/",
   upload.single("image"),
   async (req, res) => {
@@ -91,3 +101,5 @@ router.post("/",
   });
 
 module.exports = router;
+
+
