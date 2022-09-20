@@ -58,6 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         food: {
             type: DataTypes.BOOLEAN,
+
         },
         washroom: {
             type: DataTypes.BOOLEAN,
