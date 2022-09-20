@@ -22,14 +22,21 @@ router.get("/bestplaces", async (req, res) => {
 //latest place
 
 router.get("/latestplaces", async (req, res) => {
-    const endDate = Date.now();
-    const startDate= endDate -7;
-    //const sevenDaysAgo = new Date(new Date().setDate(new Date().getDate() - 30));
+    const {Op} = require("sequelize");
+    const datetime = new Date();
+    const endDate = new Date(datetime.toISOString().slice(0,10));
+    const startDate = new Date(datetime.getFullYear(), 
+                            datetime.getMonth(), 
+                            datetime.getDate() - 7).toISOString().slice(0,10);                  
+
     const places = await Places.findAll({
-        where: {between : [endDate, startDate]}
+        where: {createDate: {
+            [Op.lt]:startDate,
+            [Op.gt]:endDate
+        }}   
      } 
     );
-    console.log(places)
+    
     if (!places) {
         res.json({ state: 0, error: "User doesn't exist" });
     } else {
