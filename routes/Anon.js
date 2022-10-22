@@ -31,8 +31,8 @@ router.get("/latestplaces", async (req, res) => {
 
     const places = await Places.findAll({
         where: {createDate: {
-            [Op.lt]:startDate,
-            [Op.gt]:endDate
+            [Op.lt]:endDate,
+            [Op.gt]:startDate
         }}   
      } 
     );
