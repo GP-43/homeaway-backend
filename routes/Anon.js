@@ -21,19 +21,11 @@ router.get("/bestplaces", async (req, res) => {
 
 //latest place
 
-router.get("/latestplaces", async (req, res) => {
-    const {Op} = require("sequelize");
-    const datetime = new Date();
-    const endDate = new Date(datetime.toISOString().slice(0,10));
-    const startDate = new Date(datetime.getFullYear(), 
-                            datetime.getMonth(), 
-                            datetime.getDate() - 7).toISOString().slice(0,10);                  
+router.get("/latestplaces", async (req, res) => {            
 
-    const places = await Places.findAll({
-        where: {createDate: {
-            [Op.lt]:endDate,
-            [Op.gt]:startDate
-        }}   
+    const places = await Places.findAll({  
+        limit: 8,
+        order:[['createDate', 'DESC']]
      } 
     );
     
