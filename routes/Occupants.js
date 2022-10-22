@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Occupants, Users} = require("../models");
+const {Occupants, Users, Places} = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 
@@ -43,6 +43,14 @@ router.post("/login", async (req, res) => {
     }
 });
 
+router.get("/bookings", async (req, res) =>  {
+    const bookings = await Places.findAll();
+    if (!bookings) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.json(bookings);
+    }
+});
 
 // router.get("/users", async (req, res) => {
     
