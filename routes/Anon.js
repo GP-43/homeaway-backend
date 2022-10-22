@@ -19,4 +19,21 @@ router.get("/bestplaces", async (req, res) => {
     }
 });
 
+//latest place
+
+router.get("/latestplaces", async (req, res) => {            
+
+    const places = await Places.findAll({  
+        limit: 8,
+        order:[['createDate', 'DESC']]
+     } 
+    );
+    
+    if (!places) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(places)
+    }
+});
+
 module.exports = router;
