@@ -1,5 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
     const Places = sequelize.define("Places", {
+        place_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        renter_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         title: {
             type: DataTypes.STRING,
             allowNull: false,

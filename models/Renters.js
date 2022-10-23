@@ -1,45 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
-    const Occupants = sequelize.define("Occupants", {
-        user_ID: {
+    const Renters = sequelize.define("Renters", {
+        renter_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
         },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        image: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        contact: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        location: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        role_renter: {
+        user_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        role_admin: {
-            type: DataTypes.INTEGER,
+        nic: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        joinedDate: {
-            type: DataTypes.DATE,
+        account_number: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        bank_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        branch_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        properties: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
         rate: {
@@ -47,5 +35,5 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
     });
-    return Occupants;
+    return Renters;
 };

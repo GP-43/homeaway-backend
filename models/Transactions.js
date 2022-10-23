@@ -1,10 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
-    const Payments = sequelize.define("Payments", {
-        payment_id: {
+    const Transactions = sequelize.define("Transactions", {
+        transaction_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
+        },
+        rent_date: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        occupant_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
         },
         renter_id: {
             type: DataTypes.INTEGER,
@@ -18,11 +26,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        //paid status 1 pending status 0
+        //canceled 0 or success 1
         status: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        profit: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
     });
-    return Payments;
+    return Transactions;
 };

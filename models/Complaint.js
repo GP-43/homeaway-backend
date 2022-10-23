@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Complaint = sequelize.define("Complaint", {
-        id: {
+        compalin_id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
@@ -12,11 +12,12 @@ module.exports = (sequelize, DataTypes) => {
         subject: {
             type: DataTypes.STRING,
             allowNull: false,
-        },       
+        },
         complainee_id: {
             type: DataTypes.STRING,
             allowNull: false,
-        },       
+        },
+        //accept da reject da
         status: {
             type: DataTypes.INTEGER,
             allowNull: false,
