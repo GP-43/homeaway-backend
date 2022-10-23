@@ -1,35 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
-    const Occupants = sequelize.define("Occupants", {
+    const User = sequelize.define("User", {
         user_ID: {
             type: DataTypes.INTEGER,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
         },
-        name: {
+        email: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        image: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        contact: {
+        password: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        location: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        role_renter: {
+        //occupant 1 admin 0
+        role: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        rate: {
+        joinedDate: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        //delete 0 active 1
+        status: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
     });
-    return Occupants;
+    return User;
 };

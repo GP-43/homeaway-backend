@@ -6,7 +6,7 @@ const jsonwebtoken = require("jsonwebtoken");
 
 //select occupants
 router.get("/users", async (req, res) => {
-    const occupant = await Occupants.findAll({ where: { role: 2 } });
+    const occupant = await Occupants.findAll({ where: { role_renter: 0, status: 0 } });
     console.log(occupant)
     if (!occupant) {
         res.json({ state: 0, error: "User doesn't exist" });
@@ -32,7 +32,7 @@ router.get("/view/renters", async (req, res) => {
 
     // const {email, password} = req.body;
 
-    const renter = await Occupants.findAll({ where: { role: 3 } });
+    const renter = await Occupants.findAll({ where: { role_renter: 1, status: 0 } });
     console.log(renter)
     if (!renter) {
         res.json({ state: 0, error: "User doesn't exist" });
@@ -200,10 +200,10 @@ router.put("/delete/occupant/:id", async (req, res) => {
     const occupantId = req.params.id;
     const deleteOccupant = await Occupants.update(
         {
-            role: "0",
+            status: "1",
         },
         {
-            where: { id: occupantId }
+            where: { user_id: occupantId }
         },
     );
 
@@ -222,10 +222,10 @@ router.put("/delete/renter/:id", async (req, res) => {
     const renterId = req.params.id;
     const deleteRenter = await Occupants.update(
         {
-            role: "0",
+            status: "1",
         },
         {
-            where: { id: renterId }
+            where: { user_id: renterId }
         },
     );
 
@@ -233,6 +233,19 @@ router.put("/delete/renter/:id", async (req, res) => {
         res.json({ state: 0, error: "Complaint doesn't exist" });
     } else {
         res.json(deleteRenter)
+    }
+
+});
+
+router.delete("/delete/renter/:id", async (req, res) => {
+
+    const renterId = req.params.id;
+    const deleteRenterRow = await Renters.destroy({ where: { user_id: renterId } });
+
+    if (!deleteRenterRow) {
+        res.json({ state: 0, error: "Complaint doesn't exist" });
+    } else {
+        res.json(deleteRenterRow)
     }
 
 });
