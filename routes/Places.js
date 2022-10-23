@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const { Places } = require("../models");
+const { Places, sequelize } = require("../models");
 
 var storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -28,6 +28,19 @@ router.get("/places", async (req, res) =>  {
     } else {
         res.json(places);
     }
+});
+
+//place description
+router.get("/placedescription", async (req, res) =>  {
+  const places = await sequelize.query(
+    "SELECT * FROM places"
+    //JOIN occupants ON places.userID = occupants.userID JOIN ratingfeedback ON places.id = ratingfeedback.place_id 
+  );
+  if (!places) {
+      res.json({ state: 0, error: "User doesn't exist" });
+  } else {
+      res.json(places);
+  }
 });
 
 
