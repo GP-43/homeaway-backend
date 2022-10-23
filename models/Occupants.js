@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         image: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         email: {
             type: DataTypes.STRING,
@@ -30,15 +30,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         joinedDate: {
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
         },
         properties: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         rate: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
     }); 
     return Occupants;
