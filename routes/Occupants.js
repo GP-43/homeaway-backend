@@ -13,7 +13,7 @@ router.post("/signup", async (req, res) => {
             contact: contact,
             location: location,
             password: hash,
-            role: 2,
+            role: 2, 
         });
         res.json("SUCCESS");
     });
