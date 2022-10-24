@@ -30,18 +30,18 @@ router.get("/places", async (req, res) =>  {
     }
 });
 
-//place description
-router.get("/placedescription", async (req, res) =>  {
-  const places = await sequelize.query(
-    "SELECT * FROM places"
-    //JOIN occupants ON places.userID = occupants.userID JOIN ratingfeedback ON places.id = ratingfeedback.place_id 
-  );
-  if (!places) {
-      res.json({ state: 0, error: "User doesn't exist" });
-  } else {
-      res.json(places);
-  }
-});
+// //place description
+// router.get("/placedescription/:id", async (req, res) =>  {
+//   const place_details = await Places.findAll(
+//     //"SELECT * FROM places"
+//     //JOIN occupants ON places.userID = occupants.userID JOIN ratingfeedback ON places.id = ratingfeedback.place_id 
+//   );
+//   if (!place_details) {
+//       res.json({ state: 0, error: "User doesn't exist" });
+//   } else {
+//       res.json(place_details);
+//   }
+// });
 
 
 router.post("/",
