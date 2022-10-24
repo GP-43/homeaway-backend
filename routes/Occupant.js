@@ -39,4 +39,22 @@ router.get("/bookings", async (req, res) => {
 //     }
 // });
 
+//select rejected complaints
+
+router.get("/select/profileDetails/:id", async (req, res) => {
+
+    const userId = req.params.id;
+    const profileDetails = await Occupants.findAll(
+        {
+            where: { id: userId }
+        }
+    );
+    console.log(profileDetails)
+    if (!profileDetails) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(profileDetails)
+    }
+});
+
 module.exports = router;
