@@ -18,6 +18,9 @@ app.use(bodyParser.json())
 const authRouter = require("./routes/Authentication");
 app.use("/auth", authRouter);
 
+const occupantRouter = require("./routes/Occupant");
+app.use("/occupant", occupantRouter);
+
 const placesrouter = require("./routes/Places");
 app.use("/addnewrent", placesrouter);
  
