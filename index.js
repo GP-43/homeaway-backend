@@ -15,8 +15,8 @@ const db = require("./models");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-const occupantsRouter = require("./routes/Occupants");
-app.use("/auth", occupantsRouter);
+const authRouter = require("./routes/Authentication");
+app.use("/auth", authRouter);
 
 const placesrouter = require("./routes/Places");
 app.use("/addnewrent", placesrouter);
