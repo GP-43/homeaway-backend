@@ -123,6 +123,7 @@ router.get('/review/:placeId', async (req, res) => {
     const reviews = await Review.findAll({where: {placeId: placeId}});
     res.json(reviews);
 });
+
 router.get('/rating/:placeId', async (req, res) => {
     const placeId = req.params.placeId;
     const rate1 = await Review.count({where: {placeId: placeId, rate: 1}});
