@@ -33,6 +33,9 @@ app.use("/anon", anonRouter);
 const renterRouter = require("./routes/Renter");
 app.use("/renter", renterRouter); 
 
+const bookingRouter = require("./routes/Booking");
+app.use("/booking", bookingRouter); 
+
 db.sequelize.sync().then(() => {
     app.listen(port, () => {
         console.log(`Example app listening ${port}`);

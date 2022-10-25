@@ -28,10 +28,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        joinedDate: {
-            type: DataTypes.DATE,
-            allowNull: true, 
-        },
         properties: {
             type: DataTypes.STRING,
             allowNull: true,

@@ -5,20 +5,34 @@ const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
-router.post("/addrenter", async (req, res) = {
-  Renters.create({
-    name: req.body.name,
-    role: req.body.role,
-    email: req.body.email,
-}).then((res) => {
-  console.log(res);
-  return res.status(201).send("record created");
-})
-.catch((err) => {
-  console.log(err);
-  return res.status(501).send("something went wrong");
+router.post("/addnewrenter/:id", async (req, res) => {
+
+  const renterId = req.params.id;
+  const details = req.body;
+
+  const addnewrenter = await Renters.create(
+      {
+        UserId: renterId,
+        name: details.rName,
+        image: details.rImage,
+        email: details.rEmail,
+        contact: details.rContact,
+        location: details.rLocation,
+        password: details.rPassword,
+        role: details.rRole,
+        properties: details.rProperties,
+        rate: details.rRate,
+      }
+  );
+
+  if (!addnewrenter) {
+      res.json({ state: 0, error: "Complaint doesn't exist" });
+  } else {
+      res.json(addnewrenter)
+  }
+
 });
-})
+
 
 router.get("/myrentings/:id", async (req, res) => {
   const renterId = req.params.id;
@@ -119,6 +133,24 @@ router.get("/getuserrole/:id", async (req, res) => {
     res.json({ state: 0, error: "User doesn't exist" });
   } else {
     res.send(getuserrole);
+  }
+});
+
+//check whether a renter already
+router.get("/checkwhetherrenter/:id", async (req, res) => {
+  const userId = req.params.id;
+  const checkwhetherrenter = await Renters.findAll({
+    where: {
+      UserId: userId,
+    },
+  });
+
+  console.log(checkwhetherrenter);
+  if (!checkwhetherrenter) {
+    console.log("hbh", checkwhetherrenter)
+    res.json({ state: 0, error: "User doesn't exist" });
+  } else {
+    res.send(checkwhetherrenter);
   }
 });
 

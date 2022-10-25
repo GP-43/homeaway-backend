@@ -30,6 +30,16 @@ router.get("/places", async (req, res) =>  {
     }
 });
 
+//find their own place
+router.get("/places", async (req, res) =>  {
+  const places = await Places.findAll();
+  if (!places) {
+      res.json({ state: 0, error: "User doesn't exist" });
+  } else {
+      res.json(places);
+  }
+});
+
 
 router.post("/",
   upload.single("image"),
