@@ -91,12 +91,12 @@ async (req, res) => {
 });
 
 
-router.get("/", async (req, res) => {
+router.get("/myrentings", async (req, res) => {
 
   const place = await Places.findAll();
   console.log(place)
   if (!place) {
-      res.json({state: 0, error: "Place doesn't exist"});
+      res.json({state: 0, error: "Place doesn't exist"}); 
   } else {
       res.send(place)
   }
