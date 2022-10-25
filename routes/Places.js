@@ -118,6 +118,25 @@ router.post('/review', async (req, res) => {
     )
 })
 
+router.get('/review/:placeId', async (req, res) => {
+    const placeId = req.params.placeId;
+    res.json(placeId)
+
+    const reviews = await Review.findAll({where: {placeId: placeId}});
+    res.json(reviews);
+});
+router.get('/rating/:placeId', async (req, res) => {
+    const placeId = req.params.placeId;
+    const rate1 = await Review.count({where: {placeId: placeId, rate: 1}});
+    const rate2 = await Review.count({where: {placeId: placeId, rate: 2}});
+    const rate3 = await Review.count({where: {placeId: placeId, rate: 3}});
+    const rate4 = await Review.count({where: {placeId: placeId, rate: 4}});
+    const rate5 = await Review.count({where: {placeId: placeId, rate: 5}});
+    const rateAll = await Review.count({where: {placeId: placeId}});
+    const rate = {rate1: rate1, rate2: rate2, rate3: rate3, rate4: rate4, rate5: rate5, rateAll:rateAll};
+    res.json(rate);
+});
+
 module.exports = router;
 
 
