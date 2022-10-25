@@ -8,13 +8,13 @@ var storage = multer.diskStorage({
     callback(null, "./public/images/");
   },
   filename: function (req, file, callback) {
-    const fileNameSplit = file.originalname.split("."); 
+    const fileNameSplit = file.originalname.split(".");
     callback(
       null,
       file.originalname +
-        Math.random() +
-        "." +
-        fileNameSplit[fileNameSplit.length - 1]
+      Math.random() +
+      "." +
+      fileNameSplit[fileNameSplit.length - 1]
     );
   },
 });
@@ -104,3 +104,5 @@ router.get("/myrentings", async (req, res) => {
 
 
 module.exports = router;
+
+

@@ -1,10 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
     const Occupants = sequelize.define("Occupants", {
-        email: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        name: {
+        image: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        email: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -24,6 +28,18 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-    });
+        joinedDate: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
+        properties: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        rate: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+    }); 
     return Occupants;
 };

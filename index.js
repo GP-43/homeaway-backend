@@ -15,14 +15,23 @@ const db = require("./models");
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-const occupantsRouter = require("./routes/Occupants");
-app.use("/auth", occupantsRouter);
+const authRouter = require("./routes/Authentication");
+app.use("/auth", authRouter);
+
+const occupantRouter = require("./routes/Occupant");
+app.use("/occupant", occupantRouter);
 
 const placesrouter = require("./routes/Places");
 app.use("/addnewrent", placesrouter);
  
 const adminRouter = require("./routes/Admin");
 app.use("/admin", adminRouter);
+
+const anonRouter = require("./routes/Anon");
+app.use("/anon", anonRouter);
+
+const renterRouter = require("./routes/Renter");
+app.use("/renter", renterRouter); 
 
 db.sequelize.sync().then(() => {
     app.listen(port, () => {
