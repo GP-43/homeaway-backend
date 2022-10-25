@@ -23,7 +23,7 @@ app.use("/occupant", occupantRouter);
 
 const placesRouter = require("./routes/Places");
 app.use("/addnewrent", placesRouter);
- 
+
 const adminRouter = require("./routes/Admin");
 app.use("/admin", adminRouter);
 

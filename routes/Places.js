@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const {Places} = require("../models");
+const {Places, Review} = require("../models");
 
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -106,6 +106,19 @@ router.get('/place/:placeId', async (req, res) => {
     res.json(place);
 });
 
+router.post('/review', async (req, res) => {
+    const {rate, review, placeId, occupantId} = req.body;
+    Review.create({
+        rate: rate,
+        review: review,
+        placeId: placeId,
+        occupantId: occupantId,
+    }).then(
+        res.json("SUCCESS")
+    )
+})
+
 module.exports = router;
+
 
 
