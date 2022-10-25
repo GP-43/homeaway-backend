@@ -5,11 +5,42 @@ const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
-router.post("/makebooking", async (req, res) => {
-    const {
+// router.post("/makebooking", async (req, res) => {
+//     const {
+//         booking_id,
+//         start_date,
+//         end_date,
+//         start_time,
+//         end_time,
+//         occupant_id,
+//         renter_id,
+//         place_id,
+//         status,
+//     } = JSON.parse(req.body.DateOption);
+// })
 
-    } = JSON.parse(req.body.addNewFormData);
-})
+// await Notifications.create({
+//     compliner_id: ids.complainerId,
+//     complainee_id: ids.complaineeId,
+//     status: "accepted",
+//     complaint_id: complaintId
+// });
+
+router.post("/makebooking/:id", async (req, res) => {
+
+    const userId = req.params.id;
+    const ids = req.body;
+    const makeBookings =
+        await Bookings.create({
+            start_date: ids.StartDate,
+            end_date: ids.EndDate,
+            start_time: ids.StartHour,
+            end_time: ids.EndHour,
+            occupant_id: userId
+        });
+    res.json(makeBookings)
+});
+
 
 router.get("/bookings", async (req, res) => {
     const bookings = await Places.findAll();
