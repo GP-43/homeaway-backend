@@ -101,6 +101,7 @@ router.get("/scheduleofplaces/:id", async (req, res) => {
       "renter_id",
       "place_id",
       "status",
+      "booking_id",
     ],
     where: {
       status: 1,

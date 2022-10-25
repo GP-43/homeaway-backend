@@ -1,32 +1,36 @@
 const express = require("express");
 const router = express.Router();
-const { Transactions, Bookings, Occupants, Places, Renters } = require("../models");
+const {
+  Transactions,
+  Bookings,
+  Occupants,
+  Places,
+  Renters,
+} = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
-router.post("/cancelbooking/:id", async (req, res) => {
-
+router.put("/cancelbooking/:id", async (req, res) => {
   const renterId = req.params.id;
   const details = req.body;
 
   const cancelbooking = await Bookings.update(
     {
-      status:details.changestatus,
+      status: '0',
     },
     {
-      where: { renter_id: renterId },
+      where: { renter_id: renterId, booking_id: details.Id1 },
     }
   );
 
   if (!cancelbooking) {
-      res.json({ state: 0, error: "Complaint doesn't exist" });
+    res.json({ state: 0, error: "Complaint doesn't exist" });
   } else {
-      res.json(cancelbooking)
+    res.json(cancelbooking);
+    console.log("success")
   }
-
 });
-
 
 router.get("/myrentings/:id", async (req, res) => {
   const renterId = req.params.id;
@@ -34,8 +38,7 @@ router.get("/myrentings/:id", async (req, res) => {
     where: {
       renter_id: renterId,
     },
-  }
-  );
+  });
   if (!myrentings) {
     res.json({ state: 0, error: "User doesn't exist" });
   } else {

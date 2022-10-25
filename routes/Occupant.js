@@ -25,6 +25,7 @@ router.get("/booking/:id", async (req, res) => {
       "occupant_id",
       "place_id",
       "status",
+      "booking_id",
     ],
     where: {
       status: 1,
