@@ -58,4 +58,25 @@ router.post("/login", async (req, res) => {
     }
 });
 
+
+router.put("/updatePassword/:id", async (req, res) => {
+    const userId = req.params.id;
+    const passwordDetails = req.body;
+    const Password1 = passwordDetails.Password;
+    console.log("backend",userId,Password1)
+    // const hashed = bcrypt.hash(Password1, 10);
+    // console.log("Hashed password", hashed)
+    bcrypt.hash(Password1, 10).then((hash) => {
+        Occupants.update(
+        {
+            password : hash,
+        },
+        {
+            where: { UserId: userId }
+        });
+
+        res.json("Done")
+});
+});
+
 module.exports = router;
