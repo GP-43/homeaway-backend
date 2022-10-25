@@ -65,9 +65,31 @@ router.put("/update/profile/:id", async (req, res) => {
     console.log(details)
     const updateProfile = await Occupants.update(
         {
-            name : details.Name,
+            // name : details.Name,
             location : details.Location,
             contact : details.Contact,
+        },
+        {
+            where: { id: userId }
+        });
+    if (!updateProfile) {
+        res.json({ state: 0, error: "Complaint doesn't exist" });
+    }
+    res.json(updateProfile)
+    
+
+});
+
+
+//update profile details
+router.put("/update/profileUserName/:id", async (req, res) => {
+    const userId = req.params.id;
+    const details = req.body;
+    console.log(userId)
+    console.log(details)
+    const updateProfile = await Occupants.update(
+        {
+            name : details.Name,
         },
         {
             where: { id: userId }
