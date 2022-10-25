@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const { Places } = require("../models");
+const bcrypt = require("bcrypt");
+const jsonwebtoken = require("jsonwebtoken");
+const sequelize = require("sequelize");
 
 var storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -41,6 +44,7 @@ async (req, res) => {
     silent, 
     food,
     washroom,
+    renter_id,
     // rating,
 
   } = JSON.parse(req.body.addNewFormData);
@@ -59,6 +63,7 @@ async (req, res) => {
   console.log(postalCode);
   console.log(description);
   console.log(image);
+  console.log(renter_id);
 
   Places.create({
     title: title,
@@ -78,6 +83,7 @@ async (req, res) => {
     silent: silent,
     food:food,
     washroom:washroom,
+    renter_id: renter_id,
     // rating:rating,
   })
     .then((response) => {
@@ -91,9 +97,13 @@ async (req, res) => {
 });
 
 
-router.get("/myrentings", async (req, res) => {
-
-  const place = await Places.findAll();
+router.get("/myrentings/:id", async (req, res) => {
+  const renterId = req.params.id;
+  const place = await Places.findAll({
+    where: {
+      renter_id: renterId,
+    },
+});
   console.log(place)
   if (!place) {
       res.json({state: 0, error: "Place doesn't exist"}); 

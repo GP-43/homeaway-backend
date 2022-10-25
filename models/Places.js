@@ -65,12 +65,16 @@ module.exports = (sequelize, DataTypes) => {
         },
         rating: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: false, 
         },
         createDate: {
             type: DataTypes.DATEONLY,
             allowNull: false,
         },
+        renter_id: {
+            type: DataTypes.INTEGER, 
+            allowNull: false,
+        }
     });
     return Places;
 }; 
