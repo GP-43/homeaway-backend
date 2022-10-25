@@ -120,8 +120,6 @@ router.post('/review', async (req, res) => {
 
 router.get('/review/:placeId', async (req, res) => {
     const placeId = req.params.placeId;
-    res.json(placeId)
-
     const reviews = await Review.findAll({where: {placeId: placeId}});
     res.json(reviews);
 });

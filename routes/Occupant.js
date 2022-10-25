@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Places} = require("../models");
+const {Places, Occupants, Review} = require("../models");
 
 router.get("/bookings", async (req, res) => {
     const bookings = await Places.findAll();
@@ -9,6 +9,20 @@ router.get("/bookings", async (req, res) => {
     } else {
         res.json(bookings);
     }
+});
+
+router.post("/occupantName/", async (req, res) => {
+    const occupantIdArr = req.body;
+    const occupantIds = occupantIdArr.map((item) => {
+        return item.occupantId;
+    })
+    const occupantsNames = (await Occupants.findAll({
+        attributes: ['name', 'userId'],
+        where: {
+            userId: occupantIds
+        }
+    }))
+    res.json(occupantsNames);
 });
 
 module.exports = router;
