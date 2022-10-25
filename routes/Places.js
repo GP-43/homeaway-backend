@@ -81,7 +81,7 @@ async (req, res) => {
     // rating:rating,
   })
     .then((response) => {
-      console.log(response); 
+      //console.log(response); 
       return res.status(201).send("record created");
     })
     .catch((err) => {
