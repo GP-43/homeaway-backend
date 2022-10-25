@@ -1,8 +1,153 @@
 const express = require('express');
 const router = express.Router();
-const { Occupants, Complaint, Payments, Notifications, Places } = require("../models");
+const { Occupants, Complaint, Payments, Notifications, Places, Bookings, Transactions } = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
+const sequelize = require("sequelize");
+const TODAY = new Date();
+
+
+router.get("/countUserBookings/:id", async (req, res) => {
+    const userId = req.params.id;
+    console.log("backend", userId);
+    const bookingUserCount = await Bookings.findAll({
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("booking_id")), "user_booking_count"],
+        ],
+        where: {
+            renter_id: userId,
+        },
+    });
+    if (!bookingUserCount) {
+        res.json({ state: 0, error: "Complaint doesn't exist" });
+    } else {
+        res.json(bookingUserCount)
+    }
+
+});
+
+router.get("/countOccupants", async (req, res) => {
+    const count = await Occupants.findAll({
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("role")), "occupant_count"],
+        ],
+        where: {
+            role: 2,
+        },
+    });
+
+    console.log(count);
+    if (!count) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(count);
+    }
+});
+
+router.get("/countNewOccupants", async (req, res) => {
+    const count = await Occupants.findAll({
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("role")), "new_occupant_count"],
+        ],
+        where: {
+            role: 2,
+            joinedDate: TODAY,
+        },
+    });
+
+    console.log(TODAY);
+    if (!count) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(count);
+    }
+});
+
+
+
+router.get("/countRenters", async (req, res) => {
+    const count = await Occupants.findAll({
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("role")), "renter_count"],
+        ],
+        where: {
+            role: 3,
+        },
+    });
+
+    console.log(count);
+    if (!count) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(count);
+    }
+});
+
+router.get("/countBookings", async (req, res) => {
+    const count = await Bookings.findAll({
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("booking_id")), "booking_count"],
+        ],
+        where: {
+            status: 1,
+        },
+    });
+
+    console.log(count);
+    if (!count) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(count);
+    }
+});
+
+router.get("/countCancelledBookings", async (req, res) => {
+    const count = await Bookings.findAll({
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("booking_id")), "cancelled_booking_count"],
+        ],
+        where: {
+            status: 0,
+        },
+    });
+
+    console.log(count);
+    if (!count) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(count);
+    }
+});
+
+router.get("/totalIncome", async (req, res) => {
+    const transaction = await Transactions.findAll({
+        attributes: [
+            [sequelize.fn("SUM", sequelize.col("amount")), "total_income"],
+        ],
+    });
+
+    console.log(transaction);
+    if (!transaction) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(transaction);
+    }
+});
+
+router.get("/countPlaces", async (req, res) => {
+    const count = await Places.findAll({
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("title")), "place_count"],
+        ],
+    });
+
+    console.log(count);
+    if (!count) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(count);
+    }
+});
 
 //select occupants
 router.get("/users", async (req, res) => {
