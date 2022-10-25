@@ -1,9 +1,39 @@
 const express = require("express");
 const router = express.Router();
-const { Transactions, Bookings, Occupants} = require("../models");
+const { Transactions, Bookings, Occupants, Places, Renters } = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const sequelize = require("sequelize");
+
+router.post("/addrenter", async (req, res) = {
+  Renters.create({
+    name: req.body.name,
+    role: req.body.role,
+    email: req.body.email,
+}).then((res) => {
+  console.log(res);
+  return res.status(201).send("record created");
+})
+.catch((err) => {
+  console.log(err);
+  return res.status(501).send("something went wrong");
+});
+})
+
+router.get("/myrentings/:id", async (req, res) => {
+  const renterId = req.params.id;
+  const myrentings = await Places.findAll({
+    where: {
+      renter_id: renterId,
+    },
+  }
+  );
+  if (!myrentings) {
+    res.json({ state: 0, error: "User doesn't exist" });
+  } else {
+    res.json(myrentings);
+  }
+});
 
 //get total earnings
 router.get("/transactions/:id", async (req, res) => {

@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Users.associate = (models) => {
-        Users.hasOne(models.Occupants)
+        Users.hasOne(models.Renters);
+        Users.hasOne(models.Occupants);
     };
     return Users;
 };
