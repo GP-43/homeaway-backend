@@ -39,7 +39,7 @@ router.get("/bookings", async (req, res) => {
 //     }
 // });
 
-//select rejected complaints
+//select profile details
 
 router.get("/select/profileDetails/:id", async (req, res) => {
 
@@ -55,6 +55,29 @@ router.get("/select/profileDetails/:id", async (req, res) => {
     } else {
         res.send(profileDetails)
     }
+});
+
+//update profile details
+router.put("/update/profile/:id", async (req, res) => {
+    const userId = req.params.id;
+    const details = req.body;
+    console.log(userId)
+    console.log(details)
+    const updateProfile = await Occupants.update(
+        {
+            name : details.Name,
+            location : details.Location,
+            contact : details.Contact,
+        },
+        {
+            where: { id: userId }
+        });
+    if (!updateProfile) {
+        res.json({ state: 0, error: "Complaint doesn't exist" });
+    }
+    res.json(updateProfile)
+    
+
 });
 
 module.exports = router;
