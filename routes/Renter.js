@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Transactions, Bookings } = require("../models");
+const { Transactions, Bookings, Occupants} = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const sequelize = require("sequelize");
@@ -49,7 +49,15 @@ router.get("/paymentofplaces/:id", async (req, res) => {
 router.get("/scheduleofplaces/:id", async (req, res) => {
   const renterId = req.params.id;
   const scheduleofplaces = await Bookings.findAll({
-    attributes: ["start_date","end_date", "start_time", "end_time","renter_id", "place_id", "status"],
+    attributes: [
+      "start_date",
+      "end_date",
+      "start_time",
+      "end_time",
+      "renter_id",
+      "place_id",
+      "status",
+    ],
     where: {
       status: 1,
       renter_id: renterId,
@@ -61,6 +69,26 @@ router.get("/scheduleofplaces/:id", async (req, res) => {
     res.json({ state: 0, error: "User doesn't exist" });
   } else {
     res.send(scheduleofplaces);
+  }
+});
+
+//get user role
+router.get("/getuserrole/:id", async (req, res) => {
+  const userId = req.params.id;
+  const getuserrole = await Occupants.findAll({
+    attributes: [
+      "role",
+    ],
+    where: {
+      id: userId,
+    },
+  });
+
+  console.log(getuserrole);
+  if (!getuserrole) {
+    res.json({ state: 0, error: "User doesn't exist" });
+  } else {
+    res.send(getuserrole);
   }
 });
 
