@@ -21,14 +21,17 @@ app.use("/auth", authRouter);
 const occupantRouter = require("./routes/Occupant");
 app.use("/occupant", occupantRouter);
 
-const placesrouter = require("./routes/Places");
-app.use("/addnewrent", placesrouter);
- 
+const placesRouter = require("./routes/Places");
+app.use("/addnewrent", placesRouter);
+
 const adminRouter = require("./routes/Admin");
 app.use("/admin", adminRouter);
 
 const anonRouter = require("./routes/Anon");
 app.use("/anon", anonRouter);
+
+const renterRouter = require("./routes/Renter");
+app.use("/renter", renterRouter); 
 
 db.sequelize.sync().then(() => {
     app.listen(port, () => {
