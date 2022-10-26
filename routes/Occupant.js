@@ -5,13 +5,13 @@ const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
-router.get("/bookings", async (req, res) => {
-  const bookings = await Places.findAll();
-  if (!bookings) {
-    res.json({ state: 0, error: "User doesn't exist" });
-  } else {
-    res.json(bookings);
-  }
+router.get("/bookings", async(req, res) => {
+    const bookings = await Places.findAll();
+    if (!bookings) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.json(bookings);
+    }
 });
 
 router.get("/booking/:id", async (req, res) => {
@@ -56,5 +56,21 @@ router.get("/getoccupantinfo/:id", async (req, res) => {
     res.send(occupantinfo);
   }
 })
+
+module.exports = router;
+router.post("/occupantName/", async(req, res) => {
+    const occupantIdArr = req.body;
+    const occupantIds = occupantIdArr.map((item) => {
+        return item.occupantId;
+    })
+    const occupantsNames = (await Occupants.findAll({
+        attributes: ['name', 'userId'],
+        where: {
+            userId: occupantIds
+        }
+    }))
+    res.json(occupantsNames);
+});
+
 
 module.exports = router;
