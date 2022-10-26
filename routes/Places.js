@@ -12,7 +12,7 @@ var storage = multer.diskStorage({
     callback(
       null,
       file.originalname +
-      Math.random() +
+      Math.random() + 
       "." +
       fileNameSplit[fileNameSplit.length - 1]
     );
@@ -54,8 +54,8 @@ router.post("/",
       price,
       city,
       postalCode,
-      description,
-      wifi,
+      description, 
+      wifi, 
       parking,
       ac,
       silent,
@@ -88,10 +88,10 @@ router.post("/",
       roomCategory: roomCategory,
       contactNo: contactNo,
       price: price,
-      city: city,
+      city: city, 
       postalCode: postalCode,
-      description: description,
-      image: image,
+      description: description, 
+      image: image, 
       wifi: wifi,
       parking: parking,
       ac: ac,
