@@ -1,8 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
     const Places = sequelize.define("Places", {
-        title: {
-            type: DataTypes.STRING,
+        id:{
+            type: DataTypes.INTEGER,
             allowNull: false,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        title: {
+            type: DataTypes.STRING, 
+            allowNull: false, 
         },
         quantity: {
             type: DataTypes.INTEGER,
@@ -67,7 +73,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        renter_id: {
+        renter_id: { 
             type: DataTypes.INTEGER,
             allowNull: false, 
         },
@@ -75,6 +81,6 @@ module.exports = (sequelize, DataTypes) => {
         //     type: DataTypes.DATEONLY,
         //     allowNull: false,
         // },
-    });
+    }); 
     return Places;
 };  

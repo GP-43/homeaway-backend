@@ -25,6 +25,26 @@ router.put("/update/description/:id", async (req, res) => {
 
 });
 
+router.put("/update/price/:id", async (req, res) => {
+  const placeId = req.params.id;
+  const price = req.body.price;
+  console.log({ placeId })
+  console.log({ price })
+  const updatePrice = await Places.update(
+    {
+      price: price,
+    },
+    {
+      where: { id: placeId }
+    });
+  if (!updatePrice) {
+    res.json({ state: 0, error: "Place doesn't exist" });
+  }
+  res.json(updatePrice)
+
+
+});
+
 router.post("/addnewrenter/:id", async (req, res) => {
 
   const renterId = req.params.id;
@@ -58,7 +78,7 @@ router.get("/myrentings/:id", async (req, res) => {
   const renterId = req.params.id;
   const myrentings = await Places.findAll({
     where: {
-      renter_id: renterId,
+      renter_id: renterId, 
     },
   }
   );
@@ -112,6 +132,7 @@ router.get("/paymentofplaces/:id", async (req, res) => {
 //get schedule dates per renter
 router.get("/scheduleofplaces/:id", async (req, res) => {
   const renterId = req.params.id;
+  console.log("rent", renterId);
   const scheduleofplaces = await Bookings.findAll({
     attributes: [
       "start_date",
@@ -121,14 +142,13 @@ router.get("/scheduleofplaces/:id", async (req, res) => {
       "renter_id",
       "place_id",
       "status",
-      "booking_id",
+      "booking_id", 
     ],
-    where: {
+    where: { 
       status: 1,
       renter_id: renterId,
     },
   });
-
 
   if (!scheduleofplaces) {
     res.json({ state: 0, error: "User doesn't exist" });
@@ -163,6 +183,24 @@ router.get("/checkwhetherrenter/:id", async (req, res) => {
   const checkwhetherrenter = await Renters.findAll({
     where: {
       UserId: userId,
+    },
+  });
+
+  console.log(checkwhetherrenter);
+  if (!checkwhetherrenter) {
+    console.log("hbh", checkwhetherrenter)
+    res.json({ state: 0, error: "User doesn't exist" });
+  } else {
+    res.send(checkwhetherrenter);
+  }
+}); 
+
+//check whether renter email
+router.get("/checkrenterbyemail/:email", async (req, res) => {
+  const userEmail = req.params.email;
+  const checkwhetherrenter = await Renters.findAll({ 
+    where: {
+      email: userEmail,
     },
   });
 
