@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Occupants, Places, Users} = require("../models");
+const {Occupants, Places, Users, Renters} = require("../models");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 
@@ -51,7 +51,7 @@ router.post("/login", async (req, res) => {
                     "secretaryship",
                     {expiresIn: '1h'}
                 );
-                res.json({state: 1, data: {role: user.role, userId: user.id, token: accessToken}});
+                res.json({state: 1, data: {role: user.role, userId: user.id, isRenter:false, token: accessToken}});
             }
         });
     }

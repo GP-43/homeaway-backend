@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { Places, Occupants, Bookings } = require("../models");
+const { Places, Bookings, Occupants } = require("../models");
+const bcrypt = require("bcrypt");
+const jsonwebtoken = require("jsonwebtoken");
+const sequelize = require("sequelize");
 
 router.get("/bookings", async (req, res) => {
     const bookings = await Places.findAll();
@@ -11,7 +14,51 @@ router.get("/bookings", async (req, res) => {
     }
 });
 
-router.post("/occupantName/", async (req, res) => {
+router.get("/booking/:id", async (req, res) => {
+  const occupantId = req.params.id;
+  const booking = await Bookings.findAll({
+    attributes: [
+      "start_date",
+      "end_date",
+      "start_time",
+      "end_time",
+      "occupant_id",
+      "place_id",
+      "status",
+      "booking_id",
+    ],
+    where: {
+      status: 1,
+      occupant_id: occupantId,
+    },
+  });
+
+  console.log(booking);
+  if (!booking) {
+    res.json({ state: 0, error: "User doesn't exist" });
+  } else {
+    res.send(booking);
+  }
+});
+
+router.get("/getoccupantinfo/:id", async (req, res) => {
+  const occupantId = req.params.id;
+  const occupantinfo = await Occupants.findAll({
+    where: {
+      UserId: occupantId,
+    },
+  });
+
+  console.log(occupantinfo);
+  if (!occupantinfo) {
+    res.json({ state: 0, error: "User doesn't exist" });
+  } else {
+    res.send(occupantinfo);
+  }
+})
+
+module.exports = router;
+router.post("/occupantName/", async(req, res) => {
     const occupantIdArr = req.body;
     const occupantIds = occupantIdArr.map((item) => {
         return item.occupantId;
@@ -25,30 +72,5 @@ router.post("/occupantName/", async (req, res) => {
     res.json(occupantsNames);
 });
 
-router.get("/booking/:id", async (req, res) => {
-    const occupantId = req.params.id;
-    const booking = await Bookings.findAll({
-        attributes: [
-            "start_date",
-            "end_date",
-            "start_time",
-            "end_time",
-            "occupant_id",
-            "place_id",
-            "status",
-        ],
-        where: {
-            status: 1,
-            occupant_id: occupantId,
-        },
-    });
-
-    console.log(booking);
-    if (!booking) {
-        res.json({ state: 0, error: "User doesn't exist" });
-    } else {
-        res.send(booking);
-    }
-});
 
 module.exports = router;
