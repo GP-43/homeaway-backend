@@ -24,7 +24,6 @@ router.post("/signup", async (req, res) => {
                     UserId: result.id,
                 });
             });
-            debugger
 
             res.json("SUCCESS");
         });
