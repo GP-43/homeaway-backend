@@ -51,4 +51,22 @@ router.get("/booking/:id", async(req, res) => {
     }
 });
 
+router.post('/booking', (req, res) => {
+    const {startDate, endDate, startTime, endTime, occupantId, renterId, placeId, status,} = req.body;
+    // console.log("meheta enwd???" + bookingDetails);
+    debugger;
+    Bookings.create({
+        start_date: startDate,
+        end_date: endDate,
+        start_time: startTime,
+        end_time: endTime,
+        occupant_id: occupantId,
+        renter_id: renterId,
+        place_id: placeId,
+        status: status,
+    }).then(
+        res.JSON("SUCCESS")
+    )
+});
+
 module.exports = router;
