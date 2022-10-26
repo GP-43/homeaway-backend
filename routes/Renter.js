@@ -9,10 +9,10 @@ router.post("/addnewrenter/:id", async (req, res) => {
 
   const renterId = req.params.id;
   const details = req.body;
-
+ 
   const addnewrenter = await Renters.create(
       {
-        UserId: renterId,
+        UserId: renterId, 
         name: details.rName,
         image: details.rImage,
         email: details.rEmail,
@@ -37,9 +37,9 @@ router.post("/addnewrenter/:id", async (req, res) => {
 router.get("/myrentings/:id", async (req, res) => {
   const renterId = req.params.id;
   const myrentings = await Places.findAll({
-    // where: {
-    //   renter_id: renterId,
-    // },
+    where: {
+      renter_id: renterId,
+    },
   }
   );
   if (!myrentings) {

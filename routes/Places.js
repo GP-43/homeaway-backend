@@ -59,6 +59,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     food,
     washroom,
     rating,
+    renter_id,
   } = JSON.parse(req.body.addNewFormData);
   // console.log('Body:', req.body);
 
@@ -95,7 +96,8 @@ router.post("/", upload.single("image"), async (req, res) => {
     food: food,
     washroom: washroom,
     rating: 0,
-  })
+    renter_id:renter_id,
+  }) 
     .then((response) => {
       console.log(response);
       return res.status(201).send("record created");
