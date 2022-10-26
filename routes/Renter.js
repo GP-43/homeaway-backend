@@ -5,30 +5,50 @@ const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
+router.put("/update/description/:id", async (req, res) => {
+  const placeId = req.params.id;
+  const description = req.body.description;
+  console.log({ placeId })
+  console.log({ description })
+  const updateDescription = await Places.update(
+    {
+      description: description,
+    },
+    {
+      where: { id: placeId }
+    });
+  if (!updateDescription) {
+    res.json({ state: 0, error: "Place doesn't exist" });
+  }
+  res.json(updateDescription)
+
+
+});
+
 router.post("/addnewrenter/:id", async (req, res) => {
 
   const renterId = req.params.id;
   const details = req.body;
- 
+
   const addnewrenter = await Renters.create(
-      {
-        UserId: renterId, 
-        name: details.rName,
-        image: details.rImage,
-        email: details.rEmail,
-        contact: details.rContact,
-        location: details.rLocation,
-        password: details.rPassword,
-        role: details.rRole,
-        properties: details.rProperties,
-        rate: details.rRate,
-      }
+    {
+      UserId: renterId,
+      name: details.rName,
+      image: details.rImage,
+      email: details.rEmail,
+      contact: details.rContact,
+      location: details.rLocation,
+      password: details.rPassword,
+      role: details.rRole,
+      properties: details.rProperties,
+      rate: details.rRate,
+    }
   );
 
   if (!addnewrenter) {
-      res.json({ state: 0, error: "Complaint doesn't exist" });
+    res.json({ state: 0, error: "Complaint doesn't exist" });
   } else {
-      res.json(addnewrenter)
+    res.json(addnewrenter)
   }
 
 });
@@ -102,7 +122,7 @@ router.get("/scheduleofplaces/:id", async (req, res) => {
       "place_id",
       "status",
       "booking_id",
-    ],  
+    ],
     where: {
       status: 1,
       renter_id: renterId,
