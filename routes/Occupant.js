@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
-router.get("/bookings", async(req, res) => {
+router.get("/bookings", async (req, res) => {
     const bookings = await Places.findAll();
     if (!bookings) {
         res.json({ state: 0, error: "User doesn't exist" });
