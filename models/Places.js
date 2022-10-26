@@ -67,10 +67,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        createDate: {
-            type: DataTypes.DATEONLY,
-            allowNull: false,
+        renter_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false, 
         },
+        // createDate: {
+        //     type: DataTypes.DATEONLY,
+        //     allowNull: false,
+        // },
     });
     return Places;
-}; 
+};  
