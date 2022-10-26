@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Places, Occupants, Bookings } = require("../models");
 
-router.get("/bookings", async(req, res) => {
+router.get("/bookings", async (req, res) => {
     const bookings = await Places.findAll();
     if (!bookings) {
         res.json({ state: 0, error: "User doesn't exist" });
@@ -11,7 +11,7 @@ router.get("/bookings", async(req, res) => {
     }
 });
 
-router.post("/occupantName/", async(req, res) => {
+router.post("/occupantName/", async (req, res) => {
     const occupantIdArr = req.body;
     const occupantIds = occupantIdArr.map((item) => {
         return item.occupantId;
@@ -25,7 +25,7 @@ router.post("/occupantName/", async(req, res) => {
     res.json(occupantsNames);
 });
 
-router.get("/booking/:id", async(req, res) => {
+router.get("/booking/:id", async (req, res) => {
     const occupantId = req.params.id;
     const booking = await Bookings.findAll({
         attributes: [
