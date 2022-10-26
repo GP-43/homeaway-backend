@@ -29,8 +29,12 @@ const sequelize = require("sequelize");
 
 
 
-router.get("/bookings", async(req, res) => {
-    const bookings = await Places.findAll();
+router.get("/bookings:id", async(req, res) => {
+    const userId = req.params.id;
+    console.log("userid" + userId);
+    const bookings = await Places.findAll({
+        where: { id: userId }
+    });
     if (!bookings) {
         res.json({ state: 0, error: "User doesn't exist" });
     } else {
@@ -69,7 +73,6 @@ router.get("/bookings", async(req, res) => {
 //select profile details
 
 router.get("/select/profileDetails/:id", async(req, res) => {
-
     const userId = req.params.id;
     const profileDetails = await Occupants.findAll({
         where: { id: userId }
@@ -117,28 +120,6 @@ router.put("/update/profile/:id", async(req, res) => {
     }
     res.json(updateProfile)
 });
-
-// //update profile picture
-// router.put("/addImage/:id",upload.single("image"),
-// async (req, res) => {
-//     const image = req.file.filename;
-//     const userId = req.params.id;
-//     const details = req.body;
-//     console.log(userId)
-//     console.log(details)
-//     const updateProfile = await Occupants.update(
-//         {
-//             image : image,
-//         },
-//         {
-//             where: { id: userId }
-//         });
-//     if (!updateProfile) {
-//         res.json({ state: 0, error: "Complaint doesn't exist" });
-//     }
-//     res.json(updateProfile)
-// });
-
 
 router.get("/booking/:id", async(req, res) => {
     const occupantId = req.params.id;
