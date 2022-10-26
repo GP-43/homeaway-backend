@@ -29,13 +29,13 @@ const sequelize = require("sequelize");
 
 
 
-router.get("/bookings", async (req, res) => {
-  const bookings = await Places.findAll();
-  if (!bookings) {
-    res.json({ state: 0, error: "User doesn't exist" });
-  } else {
-    res.json(bookings);
-  }
+router.get("/bookings", async(req, res) => {
+    const bookings = await Places.findAll();
+    if (!bookings) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.json(bookings);
+    }
 });
 
 // //get details to profile
@@ -68,63 +68,54 @@ router.get("/bookings", async (req, res) => {
 
 //select profile details
 
-router.get("/select/profileDetails/:id", async (req, res) => {
+router.get("/select/profileDetails/:id", async(req, res) => {
 
-  const userId = req.params.id;
-  const profileDetails = await Occupants.findAll(
-    {
-      where: { id: userId }
+    const userId = req.params.id;
+    const profileDetails = await Occupants.findAll({
+        where: { id: userId }
+    });
+    console.log(profileDetails)
+    if (!profileDetails) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(profileDetails)
     }
-  );
-  console.log(profileDetails)
-  if (!profileDetails) {
-    res.json({ state: 0, error: "User doesn't exist" });
-  } else {
-    res.send(profileDetails)
-  }
-});
-
-//update profile details
-router.put("/update/profile/:id", async (req, res) => {
-  const userId = req.params.id;
-  const details = req.body;
-  console.log(userId)
-  console.log(details)
-  const updateProfile = await Occupants.update(
-    {
-      // name : details.Name,
-      location: details.Location,
-      contact: details.Contact,
-    },
-    {
-      where: { id: userId }
-    });
-  if (!updateProfile) {
-    res.json({ state: 0, error: "Complaint doesn't exist" });
-  }
-  res.json(updateProfile)
-
-
 });
 
 
+router.post('/booking', (req, res) => {
+    const { startDate, endDate, startTime, endTime, occupantId, renterId, placeId, status, } = req.body;
+    // console.log("meheta enwd???" + bookingDetails);
+    debugger;
+    Bookings.create({
+        start_date: startDate,
+        end_date: endDate,
+        start_time: startTime,
+        end_time: endTime,
+        occupant_id: occupantId,
+        renter_id: renterId,
+        place_id: placeId,
+        status: status,
+    }).then(
+        res.JSON("SUCCESS")
+    )
+});
+
 //update profile details
-router.put("/update/profileUserName/:id", async (req, res) => {
-  const userId = req.params.id;
-  const details = req.body;
-  console.log(userId)
-  console.log(details)
-  const updateProfile = await Occupants.update(
-    {
-      name: details.Name,
-    },
-    {
-      where: { id: userId }
+router.put("/update/profile/:id", async(req, res) => {
+    const userId = req.params.id;
+    const details = req.body;
+    const updateProfile = await Occupants.update({
+        // name : details.Name,
+        location: details.Location,
+        contact: details.Contact,
+    }, {
+        where: { id: userId }
     });
-  if (!updateProfile) {
-    res.json({ state: 0, error: "Complaint doesn't exist" });
-  }
-  res.json(updateProfile)
+    if (!updateProfile) {
+        res.json({ state: 0, error: "Complaint doesn't exist" });
+    }
+    res.json(updateProfile)
 });
 
 // //update profile picture
@@ -149,61 +140,61 @@ router.put("/update/profileUserName/:id", async (req, res) => {
 // });
 
 
-router.get("/booking/:id", async (req, res) => {
-  const occupantId = req.params.id;
-  const booking = await Bookings.findAll({
-    attributes: [
-      "start_date",
-      "end_date",
-      "start_time",
-      "end_time",
-      "occupant_id",
-      "place_id",
-      "status",
-      "booking_id",
-    ],
-    where: {
-      status: 1,
-      occupant_id: occupantId,
-    },
-  });
+router.get("/booking/:id", async(req, res) => {
+    const occupantId = req.params.id;
+    const booking = await Bookings.findAll({
+        attributes: [
+            "start_date",
+            "end_date",
+            "start_time",
+            "end_time",
+            "occupant_id",
+            "place_id",
+            "status",
+            "booking_id",
+        ],
+        where: {
+            status: 1,
+            occupant_id: occupantId,
+        },
+    });
 
-  console.log(booking);
-  if (!booking) {
-    res.json({ state: 0, error: "User doesn't exist" });
-  } else {
-    res.send(booking);
-  }
+    console.log(booking);
+    if (!booking) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(booking);
+    }
 });
 
-router.get("/getoccupantinfo/:id", async (req, res) => {
-  const occupantId = req.params.id;
-  const occupantinfo = await Occupants.findAll({
-    where: {
-      UserId: occupantId,
-    },
-  });
+router.get("/getoccupantinfo/:id", async(req, res) => {
+    const occupantId = req.params.id;
+    const occupantinfo = await Occupants.findAll({
+        where: {
+            UserId: occupantId,
+        },
+    });
 
-  console.log(occupantinfo);
-  if (!occupantinfo) {
-    res.json({ state: 0, error: "User doesn't exist" });
-  } else {
-    res.send(occupantinfo);
-  }
+    console.log(occupantinfo);
+    if (!occupantinfo) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(occupantinfo);
+    }
 })
 
-router.post("/occupantName/", async (req, res) => {
-  const occupantIdArr = req.body;
-  const occupantIds = occupantIdArr.map((item) => {
-    return item.occupantId;
-  })
-  const occupantsNames = (await Occupants.findAll({
-    attributes: ['name', 'userId'],
-    where: {
-      userId: occupantIds
-    }
-  }))
-  res.json(occupantsNames);
+router.post("/occupantName/", async(req, res) => {
+    const occupantIdArr = req.body;
+    const occupantIds = occupantIdArr.map((item) => {
+        return item.occupantId;
+    })
+    const occupantsNames = (await Occupants.findAll({
+        attributes: ['name', 'userId'],
+        where: {
+            userId: occupantIds
+        }
+    }))
+    res.json(occupantsNames);
 });
 
 
