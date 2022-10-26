@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
         renter_id: {
             type: DataTypes.INTEGER, 
             allowNull: false,
-        }
+        } 
     });
     return Places;
 }; 
