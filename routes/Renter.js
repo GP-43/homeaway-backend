@@ -105,10 +105,11 @@ router.get("/scheduleofplaces/:id", async (req, res) => {
     ],  
     where: {
       status: 1,
+      renter_id: renterId,
     },
   });
 
-  console.log(scheduleofplaces); 
+
   if (!scheduleofplaces) {
     res.json({ state: 0, error: "User doesn't exist" });
   } else {
