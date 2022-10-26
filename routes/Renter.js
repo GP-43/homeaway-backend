@@ -5,40 +5,22 @@ const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
-router.get("/select/description/:id", async (req, res) => {
-
-  const userId = req.params.id;
-  const profileDetails = await Places.findAll(
-    {
-      where: { id: userId }
-    }
-  );
-  console.log(profileDetails)
-  if (!profileDetails) {
-    res.json({ state: 0, error: "User doesn't exist" });
-  } else {
-    res.send(profileDetails)
-  }
-});
-
 router.put("/update/description/:id", async (req, res) => {
-  const userId = req.params.id;
-  const details = req.body;
-  console.log(userId)
-  console.log(details)
-  const updateProfile = await Places.update(
+  const placeId = req.params.id;
+  const description = req.body.description;
+  console.log({ placeId })
+  console.log({ description })
+  const updateDescription = await Places.update(
     {
-      // name : details.Name,
-      location: details.Location,
-      contact: details.Contact,
+      description: description,
     },
     {
-      where: { id: userId }
+      where: { id: placeId }
     });
-  if (!updateProfile) {
-    res.json({ state: 0, error: "Complaint doesn't exist" });
+  if (!updateDescription) {
+    res.json({ state: 0, error: "Place doesn't exist" });
   }
-  res.json(updateProfile)
+  res.json(updateDescription)
 
 
 });
