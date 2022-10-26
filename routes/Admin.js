@@ -7,23 +7,22 @@ const sequelize = require("sequelize");
 const TODAY = new Date();
 
 
-router.get("/countUserBookings/:id", async (req, res) => {
+router.get("/renterBooking/:id", async (req, res) => {
     const userId = req.params.id;
-    console.log("backend", userId);
-    const bookingUserCount = await Bookings.findAll({
+    const myrentings = await Bookings.findAll({
         attributes: [
             [sequelize.fn("COUNT", sequelize.col("booking_id")), "user_booking_count"],
         ],
         where: {
             renter_id: userId,
         },
-    });
-    if (!bookingUserCount) {
-        res.json({ state: 0, error: "Complaint doesn't exist" });
-    } else {
-        res.json(bookingUserCount)
     }
-
+    );
+    if (!myrentings) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.json(myrentings);
+    }
 });
 
 router.get("/countOccupants", async (req, res) => {
@@ -119,10 +118,25 @@ router.get("/countCancelledBookings", async (req, res) => {
     }
 });
 
-router.get("/totalIncome", async (req, res) => {
+router.get("/totalPayment", async (req, res) => {
     const transaction = await Transactions.findAll({
         attributes: [
             [sequelize.fn("SUM", sequelize.col("amount")), "total_income"],
+        ],
+    });
+
+    console.log(transaction);
+    if (!transaction) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(transaction);
+    }
+});
+
+router.get("/totalIncome", async (req, res) => {
+    const transaction = await Transactions.findAll({
+        attributes: [
+            [sequelize.fn("SUM", sequelize.col("profit")), "total_profit"],
         ],
     });
 
@@ -193,6 +207,22 @@ router.get("/view/payment", async (req, res) => {
     // const {email, password} = req.body;
 
     const payment = await Payments.findAll();
+    console.log(payment)
+    if (!payment) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(payment)
+    }
+});
+
+router.get("/view/sortpayment", async (req, res) => {
+
+    // const {email, password} = req.body;
+
+    const payment = await Payments.findAll({
+        order: [
+            ['amount', 'DESC'],]
+    });
     console.log(payment)
     if (!payment) {
         res.json({ state: 0, error: "User doesn't exist" });
