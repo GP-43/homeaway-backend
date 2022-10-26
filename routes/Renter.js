@@ -5,30 +5,68 @@ const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 const sequelize = require("sequelize");
 
+router.get("/select/description/:id", async (req, res) => {
+
+  const userId = req.params.id;
+  const profileDetails = await Places.findAll(
+    {
+      where: { id: userId }
+    }
+  );
+  console.log(profileDetails)
+  if (!profileDetails) {
+    res.json({ state: 0, error: "User doesn't exist" });
+  } else {
+    res.send(profileDetails)
+  }
+});
+
+router.put("/update/description/:id", async (req, res) => {
+  const userId = req.params.id;
+  const details = req.body;
+  console.log(userId)
+  console.log(details)
+  const updateProfile = await Places.update(
+    {
+      // name : details.Name,
+      location: details.Location,
+      contact: details.Contact,
+    },
+    {
+      where: { id: userId }
+    });
+  if (!updateProfile) {
+    res.json({ state: 0, error: "Complaint doesn't exist" });
+  }
+  res.json(updateProfile)
+
+
+});
+
 router.post("/addnewrenter/:id", async (req, res) => {
 
   const renterId = req.params.id;
   const details = req.body;
- 
+
   const addnewrenter = await Renters.create(
-      {
-        UserId: renterId, 
-        name: details.rName,
-        image: details.rImage,
-        email: details.rEmail,
-        contact: details.rContact,
-        location: details.rLocation,
-        password: details.rPassword,
-        role: details.rRole,
-        properties: details.rProperties,
-        rate: details.rRate,
-      }
+    {
+      UserId: renterId,
+      name: details.rName,
+      image: details.rImage,
+      email: details.rEmail,
+      contact: details.rContact,
+      location: details.rLocation,
+      password: details.rPassword,
+      role: details.rRole,
+      properties: details.rProperties,
+      rate: details.rRate,
+    }
   );
 
   if (!addnewrenter) {
-      res.json({ state: 0, error: "Complaint doesn't exist" });
+    res.json({ state: 0, error: "Complaint doesn't exist" });
   } else {
-      res.json(addnewrenter)
+    res.json(addnewrenter)
   }
 
 });
@@ -102,7 +140,7 @@ router.get("/scheduleofplaces/:id", async (req, res) => {
       "place_id",
       "status",
       "booking_id",
-    ],  
+    ],
     where: {
       status: 1,
       renter_id: renterId,
