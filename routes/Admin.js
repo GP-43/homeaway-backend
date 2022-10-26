@@ -15,6 +15,7 @@ router.get("/renterBooking/:id", async (req, res) => {
         ],
         where: {
             renter_id: userId,
+            status: 1,
         },
     }
     );
@@ -22,6 +23,80 @@ router.get("/renterBooking/:id", async (req, res) => {
         res.json({ state: 0, error: "User doesn't exist" });
     } else {
         res.json(myrentings);
+    }
+});
+
+router.get("/occupantBooking/:id", async (req, res) => {
+    const userId = req.params.id;
+    const myrentings = await Bookings.findAll({
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("booking_id")), "user_booking_count"],
+        ],
+        where: {
+            occupant_id: userId,
+        },
+    }
+    );
+    if (!myrentings) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.json(myrentings);
+    }
+});
+
+router.get("/occupantPaidBooking/:id", async (req, res) => {
+    const userId = req.params.id;
+    const myrentings = await Bookings.findAll({
+        attributes: [
+            [sequelize.fn("COUNT", sequelize.col("booking_id")), "user_paid_booking_count"],
+        ],
+        where: {
+            occupant_id: userId,
+            status: 1,
+        },
+    }
+    );
+    if (!myrentings) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.json(myrentings);
+    }
+});
+
+router.get("/renterIncome/:id", async (req, res) => {
+    const userId = req.params.id;
+    const renterIncome = await Transactions.findAll({
+        attributes: [
+            [sequelize.fn("SUM", sequelize.col("amount")), "user_total_amount"],
+            [sequelize.fn("SUM", sequelize.col("profit")), "our_profit"],
+        ],
+        where: {
+            renter_id: userId,
+        },
+    }
+    );
+    if (!renterIncome) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.json(renterIncome);
+    }
+});
+
+router.get("/occupantSpend/:id", async (req, res) => {
+    const userId = req.params.id;
+    const occupantSpend = await Transactions.findAll({
+        attributes: [
+            [sequelize.fn("SUM", sequelize.col("amount")), "user_total_amount"],
+        ],
+        where: {
+            occupant_id: userId,
+        },
+    }
+    );
+    if (!occupantSpend) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.json(occupantSpend);
     }
 });
 
@@ -156,7 +231,7 @@ router.get("/todayEarnings", async (req, res) => {
         where: sequelize.where(sequelize.fn('date', sequelize.col('createdAt')), '=', '2022-10-27')
     });
 
-    console.log(TODAY);
+    console.log("hi");
     if (!transaction) {
         res.json({ state: 0, error: "User doesn't exist" });
     } else {
