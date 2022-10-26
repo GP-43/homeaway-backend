@@ -148,6 +148,22 @@ router.get("/totalIncome", async (req, res) => {
     }
 });
 
+router.get("/todayEarnings", async (req, res) => {
+    const transaction = await Transactions.findAll({
+        attributes: [
+            [sequelize.fn("SUM", sequelize.col("profit")), "today_income"],
+        ],
+        where: sequelize.where(sequelize.fn('date', sequelize.col('createdAt')), '=', '2022-10-27')
+    });
+
+    console.log(TODAY);
+    if (!transaction) {
+        res.json({ state: 0, error: "User doesn't exist" });
+    } else {
+        res.send(transaction);
+    }
+});
+
 router.get("/countPlaces", async (req, res) => {
     const count = await Places.findAll({
         attributes: [
