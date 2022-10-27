@@ -75,6 +75,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATEONLY,
             allowNull: true,
         },
+        // createDate: {
+        //     type: DataTypes.DATEONLY,
+        //     allowNull: false,
+        // },
     });
     return Places;
 };    
