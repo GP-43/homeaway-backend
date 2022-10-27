@@ -193,13 +193,18 @@ router.get("/users", async (req, res) => {
 router.get("/view/places", async (req, res) => {
 
     // const {email, password} = req.body;
-
-    const place = await Places.findAll();
-    console.log(place)
-    if (!place) {
-        res.json({ state: 0, error: "User doesn't exist" });
-    } else {
-        res.send(place)
+    console.log("Requessss ttlkflkf slkdjf a;lskdjf")
+    try {
+        const place = await Places.findAll();
+        console.log(place)
+        if (!place) {
+            res.json({ state: 0, error: "User doesn't exist" });
+        } else {
+            res.send(place)
+        }
+    } catch (e) {
+        console.log("Place errrorororo", e);
+        res.send(e)
     }
 });
 

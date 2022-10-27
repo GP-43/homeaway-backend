@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const Places = sequelize.define("Places", {
+        renter_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         title: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -69,8 +73,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         createDate: {
             type: DataTypes.DATEONLY,
-            allowNull: false,
+            allowNull: true,
         },
     });
     return Places;
-}; 
+};    
